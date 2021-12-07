@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  mariadb_api:
+    image: mariadb:latest
+    env_file:
+      - .env
+    volumes:
+      - mariadb_volume_api:/var/lib/mysql
+    ports:
+      - "${DB_PORT}:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+
+  python_api:
+    env_file:
+      - .env
+    build: .
+    command: python manage.py runserver 0.0.0.0:${APP_PORT}
+    volumes:
+      - .:/app
+    ports:
+      - "${APP_PORT}:8000"
+    environment:
+      - DB_NAME=${DB_DATABASE}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+    depends_on:
+      - mariadb_api
+
+volumes:
+  python_volume_api:
+  mariadb_volume_api:
