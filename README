@@ -1,7 +1,0 @@
-```sh
-$ docker-compose build
-$ docker-compose run python_api django-admin startproject app .
-
-$ sudo chmod +x ./launch_local.sh
-$ sudo chmod +x ./enter.sh
-```
