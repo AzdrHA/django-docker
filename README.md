@@ -1,4 +1,4 @@
-```sh
+```shell
 $ cp .env.dist .env
 # write data
 $ docker-compose build
@@ -6,6 +6,11 @@ $ docker-compose run python_api django-admin startproject app .
 
 $ sudo chmod +x ./launch_local.sh
 $ sudo chmod +x ./enter.sh
+```
+
+```shell
+# for all new applications, use this command after the creation
+$ sudo chown ${USER}:${USER} -R ./*
 ```
 
 ### Edit file app/settings.py and set database section as:
