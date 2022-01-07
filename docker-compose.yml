@@ -1,6 +1,18 @@
 version: "3.9"
 
 services:
+  python_api:
+    env_file:
+      - .env
+    build: .
+    command: python manage.py runserver 0.0.0.0:${APP_PORT}
+    volumes:
+      - .:/srv/app
+    ports:
+      - "${APP_PORT}:8000"
+    depends_on:
+      - mariadb_api
+
   mariadb_api:
     image: mariadb:latest
     env_file:
@@ -14,18 +26,6 @@ services:
       - MYSQL_DATABASE=${DB_DATABASE}
       - MYSQL_USER=${DB_USER}
       - MYSQL_PASSWORD=${DB_PASSWORD}
-
-  python_api:
-    env_file:
-      - .env
-    build: .
-    command: python manage.py runserver 0.0.0.0:${APP_PORT}
-    volumes:
-      - .:/app
-    ports:
-      - "${APP_PORT}:8000"
-    depends_on:
-      - mariadb_api
 
 volumes:
   python_volume_api:

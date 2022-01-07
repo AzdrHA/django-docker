@@ -1,4 +1,6 @@
 ```sh
+$ cp .env.dist .env
+# write data
 $ docker-compose build
 $ docker-compose run python_api django-admin startproject app .
 
